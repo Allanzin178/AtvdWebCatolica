@@ -101,11 +101,13 @@ class Usuario {
         this.notaGoku = 0
         this.notaVegeta = 0
         this.notaKidBuu = 0
+        this.respostasSelecionadas = []
     }
 
     calcularNotas(botaoSelecionado, perguntas){
         let selecionado = botaoSelecionado.value
-        
+        this.respostasSelecionadas.push(selecionado)
+
         perguntas.forEach((pergunta)=>{
             pergunta.respostas.forEach((resposta)=>{
                 if(resposta.texto == selecionado){
@@ -116,7 +118,7 @@ class Usuario {
             })
         })
 
-        console.log(`Goku: ${this.notaGoku} Vegeta: ${this.notaVegeta} KidBuu: ${this.notaKidBuu} ${selecionado}`)
+        console.log(`Goku: ${this.notaGoku} Vegeta: ${this.notaVegeta} KidBuu: ${this.notaKidBuu} Respostas: ${this.respostasSelecionadas}`)
     }
 }
 

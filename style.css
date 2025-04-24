@@ -25,14 +25,6 @@ body{
     color: var(--cinzaClaro);
 }
 
-body img{
-    position: fixed;
-    top: 0;
-    z-index: -5;
-    filter: blur(2px);
-    transform: scale(1.1);
-}
-
 h1{
     color: white;
 }
@@ -69,6 +61,14 @@ h1{
 .card::before{
     filter: blur(1.5em);
     opacity: 0.5;
+}
+
+.img img{
+    position: fixed;
+    top: 0;
+    z-index: -5;
+    filter: blur(2px);
+    transform: scale(1.1);
 }
 
 .img::after{
