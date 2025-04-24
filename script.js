@@ -28,8 +28,8 @@ let perguntas = [
         pergunta: "Você corre atrás dos seus sonhos?",
         respostas: [
             { texto: "Conquisto eles através do esforço"},
-            { texto: "Se vier ao aca"},
-            { texto: "Tenho prazer em ver o bem dos outros"},
+            { texto: "Se vier ao acaso"},
+            { texto: "Não me esforço mas conquisto meus sonhos"},
         ]
     }
 ]
@@ -45,7 +45,8 @@ function trocarSelecionado(botao){
             })
             botao.classList.add('selecionado')
         }
-        console.log(botao.value)
+        console.log(document.getElementsByClassName('selecionado'))
+        // console.log(botao.value)
     })
 }
 
@@ -56,12 +57,8 @@ function resetaForm(){
 }
 
 function estruturarQuestoes(){
-    if(numQuestao >= perguntas.length){
-        alert("Acabaram as questões")
-        return
-    }
-    
-    
+
+    resetaForm()
     pergunta.classList.add('cooldown1')
     opcoes.forEach((opcao) =>{
         opcao.classList.add('cooldown')
@@ -86,10 +83,24 @@ function estruturarQuestoes(){
 }
 
 enviarBtn.addEventListener("click", ()=>{
-    // numQuestao++
-    resetaForm()
+
+    if(opSelecionado == 0){
+        pergunta.innerHTML = 'ERRO! Selecione uma alternativa!'
+        setTimeout(()=>{
+            pergunta.innerHTML = perguntas[numQuestao - 1].pergunta
+        },1000)
+        return
+    }
+
+    if(numQuestao >= perguntas.length){
+        alert("Acabaram as questões")
+        return
+    }
+    
+    opSelecionado = 0
     estruturarQuestoes()
 })
+
 
 opcoes.forEach((botao) => {
     trocarSelecionado(botao)

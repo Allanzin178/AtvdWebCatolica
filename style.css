@@ -73,8 +73,8 @@ h1{
 
 .img::after{
     content: '';
-    position: absolute;
-    height: 101%;
+    position: fixed;
+    height: 110%;
     width: 100%;
     background: var(--fundo);
     top: 50%;
