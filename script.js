@@ -22,8 +22,8 @@ class Quiz {
 
         // Adiciona evento ao botão de enviar
         this.enviarBtn.addEventListener('click', () => {
-            this.proximaPergunta()}
-        );
+            this.proximaPergunta()
+        });
 
         // Exibe a primeira questão
         this.estruturarQuestoes();
@@ -42,7 +42,7 @@ class Quiz {
             })
 
             this.botaoSelecionado = botao
-            
+
             botao.classList.add('selecionado');
         }
         console.log(document.getElementsByClassName('selecionado'));
@@ -55,8 +55,6 @@ class Quiz {
     }
 
     estruturarQuestoes() {
-        
-
         this.resetaForm();
         this.perguntaEl.classList.add('cooldown1');
         this.opcoes.forEach((opcao) => opcao.classList.add('cooldown'));
@@ -118,9 +116,10 @@ class Usuario {
             })
         })
 
-        console.log(this.notaGoku + this.notaVegeta + this.notaKidBuu + selecionado)
+        console.log(`Goku: ${this.notaGoku} Vegeta: ${this.notaVegeta} KidBuu: ${this.notaKidBuu} ${selecionado}`)
     }
 }
+
 // Dados das perguntas
 const perguntas = [
     {
