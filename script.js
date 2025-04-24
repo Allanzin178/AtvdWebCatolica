@@ -1,41 +1,75 @@
 class Quiz {
     constructor(perguntas, personagens) {
-        this.personagens = personagens; // Array de personagens
-        this.perguntas = perguntas; // Array de perguntas
-        this.numQuestao = 0; // Índice da questão atual
-        this.opSelecionado = 0; // Controle de seleção
+        this.personagens = personagens
+        this.perguntas = perguntas
+        this.numQuestao = 0
+        this.opSelecionado = 0
         this.botaoSelecionado
-        this.perguntaEl = document.getElementById('pergunta'); // Elemento da pergunta
-        this.opcoes = document.getElementsByName('opcoes'); // Botões de opções
-        this.enviarBtn = document.getElementById('enviarBtn'); // Botão de enviar
+        this.card = document.getElementById('card')
         this.usuario = new Usuario()
 
-        this.inicializar(); // Configura os eventos e exibe a primeira questão
+        this.inicializar()
     }
 
     inicializar() {
-        // Adiciona eventos aos botões de opções
+        
+        let h1 = document.createElement('h1')
+        h1.textContent = 'Testando'
+
+        let p = document.createElement('p')
+        p.setAttribute('id', 'pergunta')
+        p.classList.add('cooldown1')
+        p.textContent = 'A pergunta'
+
+        let form = document.createElement('form')
+        form.setAttribute('id', 'form')
+
+        this.card.appendChild(h1)
+        this.card.appendChild(p)
+        this.card.appendChild(form)
+
+        this.form = document.getElementById('form')
+        this.perguntaEl = document.getElementById('pergunta')
+
+        for(let i = 0; i < 3; i++){
+            let input = document.createElement('input')
+            input.setAttribute('type', 'button')
+            input.setAttribute('name', 'opcoes')
+            input.setAttribute('value', `Opção ${i + 1}`)
+            input.classList.add('cooldown')
+            this.form.appendChild(input)
+        }
+
+        let enviarBtn = document.createElement('input')
+        enviarBtn.setAttribute('type', 'button')
+        enviarBtn.setAttribute('name', 'enviar')
+        enviarBtn.setAttribute('value', `Próximo`)
+        enviarBtn.setAttribute('id', `enviarBtn`)
+
+        this.form.appendChild(enviarBtn)
+
+        this.opcoes = document.getElementsByName('opcoes')
+        this.enviarBtn = document.getElementById('enviarBtn')
+
         this.opcoes.forEach((botao) => {
             botao.addEventListener('click', () => {
                 this.trocarSelecionado(botao)}
-            );
-        });
+            )
+        })
 
-        // Adiciona evento ao botão de enviar
         this.enviarBtn.addEventListener('click', () => {
             this.proximaPergunta()
-        });
+        })
 
-        // Exibe a primeira questão
-        this.estruturarQuestoes();
+        this.estruturarQuestoes()
     }
 
     trocarSelecionado(botao) {
         if (this.opSelecionado === 0) {
-            botao.classList.add('selecionado');
+            botao.classList.add('selecionado')
 
             this.botaoSelecionado = botao
-            this.opSelecionado = 1;
+            this.opSelecionado = 1
         } else {
 
             this.opcoes.forEach((botao) => {
@@ -44,84 +78,105 @@ class Quiz {
 
             this.botaoSelecionado = botao
 
-            botao.classList.add('selecionado');
+            botao.classList.add('selecionado')
         }
-        console.log(document.getElementsByClassName('selecionado'));
+        console.log(document.getElementsByClassName('selecionado'))
     }
 
     resetaForm() {
         this.opcoes.forEach((botao) => {
-            botao.classList.remove('selecionado')}
-        );
+            botao.classList.remove('selecionado')
+        })
     }
 
     estruturarQuestoes() {
-        this.resetaForm();
-        this.perguntaEl.classList.add('cooldown1');
-        this.opcoes.forEach((opcao) => opcao.classList.add('cooldown'));
+        this.resetaForm()
+        this.perguntaEl.classList.add('cooldown1')
+        this.opcoes.forEach((opcao) => opcao.classList.add('cooldown'))
 
         setTimeout(() => {
-            // Atualiza a pergunta e as opções
-            const questaoAtual = this.perguntas[this.numQuestao];
-            this.perguntaEl.innerHTML = questaoAtual.pergunta;
+            const questaoAtual = this.perguntas[this.numQuestao]
+            this.perguntaEl.innerHTML = questaoAtual.pergunta
             this.opcoes.forEach((opcao, index) => {
-                opcao.value = questaoAtual.respostas[index].texto;
-            });
+                opcao.value = questaoAtual.respostas[index].texto
+            })
 
-            // Remove as classes de cooldown
-            this.perguntaEl.classList.remove('cooldown1');
-            this.opcoes.forEach((opcao) => opcao.classList.remove('cooldown'));
+            this.perguntaEl.classList.remove('cooldown1')
+            this.opcoes.forEach((opcao) => opcao.classList.remove('cooldown'))
 
-            this.numQuestao++;
-        }, 1000);
+            this.numQuestao++
+        }, 1000)
     }
 
     proximaPergunta() {
         if (this.opSelecionado === 0) {
-            this.perguntaEl.innerHTML = 'ERRO! Selecione uma alternativa!';
+            this.perguntaEl.innerHTML = 'ERRO! Selecione uma alternativa!'
             setTimeout(() => {
-                this.perguntaEl.innerHTML = this.perguntas[this.numQuestao - 1].pergunta;
-            }, 1000);
-            return;
+                this.perguntaEl.innerHTML = this.perguntas[this.numQuestao - 1].pergunta
+            }, 1000)
+            return
         }
 
         this.usuario.calcularNotas(this.botaoSelecionado, this.perguntas)
 
         if (this.numQuestao >= this.perguntas.length) {
-            this.exibirResultadoFinal();
-            return;
+            this.exibirResultadoFinal()
+            return
         }
 
-        this.opSelecionado = 0;
-        this.estruturarQuestoes();
+        this.opSelecionado = 0
+        this.estruturarQuestoes()
     }
 
-    //Resultado
     exibirResultadoFinal() {
-        let personagem;
+        let personagem
 
         if (this.usuario.notaGoku >= this.usuario.notaVegeta && this.usuario.notaGoku >= this.usuario.notaKidBuu) {
-            personagem = this.personagens[0];
+            personagem = this.personagens[0]
         } else if (this.usuario.notaVegeta >= this.usuario.notaGoku && this.usuario.notaVegeta >= this.usuario.notaKidBuu) {
-            personagem = this.personagens[1];
+            personagem = this.personagens[1]
         } else {
-            personagem = this.personagens[2];
+            personagem = this.personagens[2]
         }
-    
-        const cardResultado = document.querySelector('.card');
-        cardResultado.innerHTML = 
-        `
-            <h1>Resultado Final</h1>
-            <h2>Você se parece mais com: <strong>${personagem.nome}</strong></h2>
-            <img src="${personagem.imagem}" alt="${personagem.nome}" class = "img2">
-            
-            <p style = "margin-top: 10px">${personagem.descricao}</p>
-            <button name = "enviar" id = "reniciar" style = "margin-top: 20px">Reiniciar</button>
-        `;
-    
+        
+        while(this.card.lastChild){
+            this.card.removeChild(this.card.lastChild)
+        }
+
+        let h1 = document.createElement('h1')
+        h1.textContent = `Resultado final`
+        this.card.appendChild(h1)
+
+        let h2 = document.createElement('h2')
+        h2.innerHTML = `Você se parece mais com: <strong>${personagem.nome}</strong>`
+        this.card.appendChild(h2)
+
+        let img = document.createElement('img')
+        img.setAttribute('src', `${personagem.imagem}`)
+        img.setAttribute('alt', `${personagem.nome}`)
+        img.classList.add('img2')
+        this.card.appendChild(img)
+
+        let p = document.createElement('p')
+        p.textContent = `${personagem.descricao}`
+        p.style['marginTop'] = '10px'
+        this.card.appendChild(p)
+
+        let button = document.createElement('button')
+        button.textContent = 'Reiniciar'
+        button.setAttribute('id', 'reiniciar')
+        button.setAttribute('name', 'enviar')
+        button.style['marginTop'] = '20px'
+        this.card.appendChild(button)
+
+        button.addEventListener('click', ()=>{
+            while(this.card.lastChild){
+                this.card.removeChild(this.card.lastChild)
+            }
+            this.quiz = new Quiz(this.perguntas, this.personagens)
+        })
     }
 }
-
 class Usuario {
     constructor(){
         this.notaGoku = 0
@@ -142,11 +197,10 @@ class Usuario {
             })
         })
 
-        console.log(`Goku: ${this.notaGoku} Vegeta: ${this.notaVegeta} KidBuu: ${this.notaKidBuu} ${selecionado}`);
+        console.log(`Goku: ${this.notaGoku} Vegeta: ${this.notaVegeta} KidBuu: ${this.notaKidBuu} ${selecionado}`)
     }
 }
 
-// Dados das perguntas
 const perguntas = [
     {
         pergunta: 'Qual seu nível de inteligencia?',
@@ -228,7 +282,7 @@ const perguntas = [
             { texto: 'Regras foram feitas para serem quebradas', notaGoku: 1, notaVegeta: 1, notaKidBuu: 3 },
         ],
     },
-];
+]
 
 const personagens = [
     {
@@ -246,7 +300,6 @@ const personagens = [
         descricao: 'Você age por impulso, com um grande ego mantem o holofotes apenas em você mesmo. Apesar disso você mantem um grande poder e pode se tornar um grande guerreiro',
         imagem: 'kidbuu.jpg',
     },
-];
+]
 
-// Inicializa o quiz
-const quiz = new Quiz(perguntas, personagens);
+const quiz = new Quiz(perguntas, personagens)
