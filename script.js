@@ -1,5 +1,6 @@
 class Quiz {
-    constructor(perguntas) {
+    constructor(perguntas, personagens) {
+        this.personagens = personagens; // Array de personagens
         this.perguntas = perguntas; // Array de perguntas
         this.numQuestao = 0; // Índice da questão atual
         this.opSelecionado = 0; // Controle de seleção
@@ -84,15 +85,40 @@ class Quiz {
             return;
         }
 
+        this.usuario.calcularNotas(this.botaoSelecionado, this.perguntas)
+
         if (this.numQuestao >= this.perguntas.length) {
-            alert('Acabaram as questões');
+            this.exibirResultadoFinal();
             return;
         }
 
-        this.usuario.calcularNotas(this.botaoSelecionado, this.perguntas)
-
         this.opSelecionado = 0;
         this.estruturarQuestoes();
+    }
+
+    //Resultado
+    exibirResultadoFinal() {
+        let personagem;
+
+        if (this.usuario.notaGoku >= this.usuario.notaVegeta && this.usuario.notaGoku >= this.usuario.notaKidBuu) {
+            personagem = this.personagens[0];
+        } else if (this.usuario.notaVegeta >= this.usuario.notaGoku && this.usuario.notaVegeta >= this.usuario.notaKidBuu) {
+            personagem = this.personagens[1];
+        } else {
+            personagem = this.personagens[2];
+        }
+    
+        const cardResultado = document.querySelector('.card');
+        cardResultado.innerHTML = 
+        `
+            <h1>Resultado Final</h1>
+            <h2>Você se parece mais com: <strong>${personagem.nome}</strong></h2>
+            <img src="${personagem.imagem}" alt="${personagem.nome}" class = "img2">
+            
+            <p style = "margin-top: 10px">${personagem.descricao}</p>
+            <button name = "enviar" id = "reniciar" style = "margin-top: 20px">Reiniciar</button>
+        `;
+    
     }
 }
 
@@ -116,7 +142,7 @@ class Usuario {
             })
         })
 
-        console.log(`Goku: ${this.notaGoku} Vegeta: ${this.notaVegeta} KidBuu: ${this.notaKidBuu} ${selecionado}`)
+        console.log(`Goku: ${this.notaGoku} Vegeta: ${this.notaVegeta} KidBuu: ${this.notaKidBuu} ${selecionado}`);
     }
 }
 
@@ -148,5 +174,23 @@ const perguntas = [
     },
 ];
 
+const personagens = [
+    {
+        nome: 'Goku',
+        descricao: 'Você é determinado, bondoso e sempre busca proteger aqueles ao seu redor e proporcionar os seus sonhos em realidade, pois quer ver eles bem',
+        imagem: 'goku.png',
+    },
+    {
+        nome: 'Vegeta',
+        descricao: 'Você tem espirito de um grande guerreiro sempre protegendo quem realmente importa, com uma mente brilhante um futuro promissor o aguarda',
+        imagem: 'vegeta.png',
+    },
+    {
+        nome: 'Kid Buu',
+        descricao: 'Você age por impulso, com um grande ego mantem o holofotes apenas em você mesmo. Apesar disso você mantem um grande poder e pode se tornar um grande guerreiro',
+        imagem: 'kidbuu.jpg',
+    },
+];
+
 // Inicializa o quiz
-const quiz = new Quiz(perguntas);
+const quiz = new Quiz(perguntas, personagens);
