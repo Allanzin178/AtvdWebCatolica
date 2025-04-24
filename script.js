@@ -172,6 +172,62 @@ const perguntas = [
             { texto: 'Não me esforço mas conquisto meus sonhos', notaGoku: 2 , notaVegeta: 3, notaKidBuu: 2  },
         ],
     },
+    {
+        pergunta: 'Qual é sua reação diante de um desafio?',
+        respostas: [
+            { texto: 'Aceito com empolgação', notaGoku: 3, notaVegeta: 2, notaKidBuu: 1 },
+            { texto: 'Fico frustado mas enfrento', notaGoku: 2, notaVegeta: 3, notaKidBuu: 1 },
+            { texto: 'Ignoro ou destruo quem me desafia', notaGoku: 1, notaVegeta: 2, notaKidBuu: 3 },
+        ],
+    },
+    {
+        pergunta: 'Qual dessas palavras mais te define?',
+        respostas: [
+            { texto: 'Determinação', notaGoku: 3, notaVegeta: 2, notaKidBuu: 1 },
+            { texto: 'Orgulho', notaGoku: 2, notaVegeta: 3, notaKidBuu: 1 },
+            { texto: 'Caos', notaGoku: 1, notaVegeta: 1, notaKidBuu: 3 },
+        ],
+    },
+    {
+        pergunta: 'Você costuma cooperar com os outros?',
+        respostas: [
+            { texto: 'Sim, sempre que posso', notaGoku: 3, notaVegeta: 1, notaKidBuu: 1 },
+            { texto: 'Depende do que eu ganho com isso', notaGoku: 2, notaVegeta: 3, notaKidBuu: 2 },
+            { texto: 'Prefiro agir sozinho ou causar bagunça', notaGoku: 1, notaVegeta: 2, notaKidBuu: 3 },
+        ],
+    },
+    {
+        pergunta: 'Como você reage quando está com raiva?',
+        respostas: [
+            { texto: 'Respiro fundo e tente me acalmar', notaGoku: 3, notaVegeta: 1, notaKidBuu: 1 },
+            { texto: 'Fico irritado, mas penso antes de agir', notaGoku: 2, notaVegeta: 3, notaKidBuu: 2 },
+            { texto: 'Perco o controle e ataco', notaGoku: 1, notaVegeta: 1, notaKidBuu: 3 },
+        ],
+    },
+    {
+        pergunta: 'Qual dessas cores você mais gosta?',
+        respostas: [
+            { texto: 'Laranja', notaGoku: 3, notaVegeta: 1, notaKidBuu: 1 },
+            { texto: 'Azul', notaGoku: 1, notaVegeta: 3, notaKidBuu: 1 },
+            { texto: 'Rosa', notaGoku: 1, notaVegeta: 1, notaKidBuu: 3 },
+        ],
+    },
+    {
+        pergunta: 'O que mais importa para você?',
+        respostas: [
+            { texto: 'Proteger as pessoas', notaGoku: 3, notaVegeta: 1, notaKidBuu: 1 },
+            { texto: 'Superar meus limites', notaGoku: 2, notaVegeta: 3, notaKidBuu: 2 },
+            { texto: 'Me divertir, não importa como', notaGoku: 1, notaVegeta: 2, notaKidBuu: 3 },
+        ],
+    },
+    {
+        pergunta: 'Qual a sua relação com regras?', 
+        respostas: [
+            { texto: 'Sigo as regras', notaGoku: 3, notaVegeta: 2, notaKidBuu: 1 },
+            { texto: 'Regras são flexíveis', notaGoku: 2, notaVegeta: 3, notaKidBuu: 1 },
+            { texto: 'Regras foram feitas para serem quebradas', notaGoku: 1, notaVegeta: 1, notaKidBuu: 3 },
+        ],
+    },
 ];
 
 const personagens = [
