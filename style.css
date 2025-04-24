@@ -47,6 +47,7 @@ h2{
     align-items: center;
     height: 100vh;
 }
+
 .card{
     padding: 2em;
     margin: auto;  
@@ -55,6 +56,29 @@ h2{
     border-radius: 10px;
     background: var(--cinzaEscuro);
     position: relative;
+    transition: width 0.5s ease-out, height 0.5s ease-out;
+}
+
+.card h1{
+    transition: translate 0.3s ease-out, border 0.1s ease-out, background-color 0.1s ease, color 0.5s ease;
+}
+
+.card2{
+    padding: 2em;
+    margin: auto;  
+    width: 800px;
+    text-align: center;
+    border-radius: 10px;
+    background: var(--cinzaEscuro);
+    position: relative;
+}
+.card2 h1{
+    margin-bottom: 15px;
+}
+
+.card2 p{
+    margin-bottom: 15px;
+    transition: translate 0.3s ease-out, border 0.1s ease-out, background-color 0.1s ease, color 0.5s ease;
 }
 
 .card p{
@@ -75,7 +99,21 @@ h2{
     padding: 3px;
 }
 
-.card::before{
+.card2::after, .card2::before{
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: conic-gradient( #ecff45, #a89805, #ecff45, #a89805, #ecff45);
+    border-radius: 10px;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+    padding: 3px;
+}
+
+.card2::before{
     filter: blur(1.5em);
     opacity: 0.5;
 }

@@ -13,8 +13,12 @@ class Quiz {
 
     inicializar() {
         
+        this.card.classList.remove('card2')
+        this.card.classList.add('card')
+
         let h1 = document.createElement('h1')
-        h1.textContent = 'Testando'
+        h1.textContent = 'Perguntas'
+        h1.classList.add('cooldown1')
 
         let p = document.createElement('p')
         p.setAttribute('id', 'pergunta')
@@ -30,6 +34,7 @@ class Quiz {
 
         this.form = document.getElementById('form')
         this.perguntaEl = document.getElementById('pergunta')
+        this.titulo = h1
 
         for(let i = 0; i < 3; i++){
             let input = document.createElement('input')
@@ -92,16 +97,19 @@ class Quiz {
     estruturarQuestoes() {
         this.resetaForm()
         this.perguntaEl.classList.add('cooldown1')
+        this.titulo.classList.add('cooldown1')
         this.opcoes.forEach((opcao) => opcao.classList.add('cooldown'))
 
         setTimeout(() => {
             const questaoAtual = this.perguntas[this.numQuestao]
             this.perguntaEl.innerHTML = questaoAtual.pergunta
+            this.titulo.textContent = `Pergunta ${this.numQuestao + 1}`
             this.opcoes.forEach((opcao, index) => {
                 opcao.value = questaoAtual.respostas[index].texto
             })
 
             this.perguntaEl.classList.remove('cooldown1')
+            this.titulo.classList.remove('cooldown1')
             this.opcoes.forEach((opcao) => opcao.classList.remove('cooldown'))
 
             this.numQuestao++
@@ -138,6 +146,8 @@ class Quiz {
         } else {
             personagem = this.personagens[2]
         }
+
+        this.resultado = personagem
         
         while(this.card.lastChild){
             this.card.removeChild(this.card.lastChild)
@@ -173,7 +183,9 @@ class Quiz {
             while(this.card.lastChild){
                 this.card.removeChild(this.card.lastChild)
             }
-            this.quiz = new Quiz(this.perguntas, this.personagens)
+            
+            inicio.registrarHistorico(this.resultado, this.usuario)
+            inicio.telaInicial()
         })
     }
 }
@@ -198,6 +210,69 @@ class Usuario {
         })
 
         console.log(`Goku: ${this.notaGoku} Vegeta: ${this.notaVegeta} KidBuu: ${this.notaKidBuu} ${selecionado}`)
+    }
+}
+
+class Inicio {
+    constructor(perguntas, personagens){
+        this.perguntas = perguntas
+        this.personagens = personagens
+        this.historico = []
+        this.tentativas = 0
+        this.card = document.getElementById('card')
+        this.telaInicial()
+    }
+    telaInicial(){
+        this.card.classList.remove('card')
+        this.card.classList.add('card2')
+
+        while(this.card.lastChild){
+            this.card.removeChild(this.card.lastChild)
+        }
+
+        let comecarBtn = document.createElement('input')
+        comecarBtn.setAttribute('type', 'button')
+        comecarBtn.setAttribute('name', 'enviar')
+        comecarBtn.setAttribute('value', `Começar`)
+        comecarBtn.setAttribute('id', `comecarBtn`)
+
+        let h1 = document.createElement('h1')
+        h1.textContent = 'Bem-vindo ao Universo Dragon Ball Z'
+
+        let p = document.createElement('p')
+        p.setAttribute('id', 'pergunta')
+        p.textContent = 'Em um mundo onde guerreiros poderosos enfrentam ameaças que desafiam os limites da imaginação, você está prestes a descobrir qual personagem de Dragon Ball Z mais se parece com você. Prepare-se para embarcar em uma jornada cheia de energia, batalhas épicas e decisões importantes.'
+
+        this.card.appendChild(h1)
+        this.card.appendChild(p)
+        this.card.appendChild(comecarBtn)
+
+        this.comecarBtn = document.getElementById('comecarBtn')
+
+        this.iniciar()
+    }
+
+    iniciar(){
+        this.comecarBtn.addEventListener('click', ()=>{
+            while(this.card.lastChild){
+                this.card.removeChild(this.card.lastChild)
+            }
+            this.quiz = new Quiz(this.perguntas, this.personagens)
+        })
+    }
+
+    registrarHistorico(personagem, usuario){
+        this.tentativas++
+
+        let registro = {
+            personagem: personagem.nome,
+            tentativas: this.tentativas,
+            notaGoku: usuario.notaGoku,
+            notaVegeta: usuario.notaVegeta,
+            notaKidBuu: usuario.notaKidBuu
+        }
+        this.historico.push(registro)
+        console.log('Histórico:', this.historico)
     }
 }
 
@@ -302,4 +377,4 @@ const personagens = [
     },
 ]
 
-const quiz = new Quiz(perguntas, personagens)
+const inicio = new Inicio(perguntas, personagens)
